@@ -38,28 +38,40 @@ doRelease().catch(err => {
 function prepareAssets () {
   const outPath = path.join(__dirname, '..', 'out')
 
-  const zipAssets = [{
-    name: 'electron-api-demos-mac.zip',
-    path: path.join(outPath, 'Electron API Demos-darwin-x64', 'Electron API Demos.app')
-  }, {
-    name: 'electron-api-demos-windows.zip',
-    path: path.join(outPath, 'Electron API Demos-win32-ia32')
-  }, {
-    name: 'electron-api-demos-linux.zip',
-    path: path.join(outPath, 'Electron API Demos-linux-x64')
-  }]
+  const zipAssets = [
+    {
+      name: "electron-api-demos-mac.zip",
+      path: path.join(outPath, "PDF Converter-darwin-x64", "PDF Converter.app")
+    },
+    {
+      name: "pdf-converter-windows.zip",
+      path: path.join(outPath, "PDF Converter-win32-ia32")
+    },
+    {
+      name: "pdf-converter-linux.zip",
+      path: path.join(outPath, "PDF Converter-linux-x64")
+    }
+  ];
 
   return Promise.all(zipAssets.map(zipAsset)).then((zipAssets) => {
-    return zipAssets.concat([{
-      name: 'RELEASES',
-      path: path.join(outPath, 'windows-installer', 'RELEASES')
-    }, {
-      name: 'ElectronAPIDemosSetup.exe',
-      path: path.join(outPath, 'windows-installer', 'ElectronAPIDemosSetup.exe')
-    }, {
-      name: `electron-api-demos-${version}-full.nupkg`,
-      path: path.join(outPath, 'windows-installer', `electron-api-demos-${version}-full.nupkg`)
-    }])
+    return zipAssets.concat([
+      {
+        name: "RELEASES",
+        path: path.join(outPath, "windows-installer", "RELEASES")
+      },
+      {
+        name: "PdfConverterSetup.exe",
+        path: path.join(outPath, "windows-installer", "PdfConverterSetup.exe")
+      },
+      {
+        name: `pdf-converter-${version}-full.nupkg`,
+        path: path.join(
+          outPath,
+          "windows-installer",
+          `pdf-converter-${version}-full.nupkg`
+        )
+      }
+    ]);
   })
 }
 
@@ -88,8 +100,8 @@ function zipAsset (asset) {
 
 async function getOrCreateRelease () {
   const { data: releases } = await github.repos.listReleases({
-    owner: 'electron',
-    repo: 'electron-api-demos',
+    owner: 'akramgassem',
+    repo: 'pdf-converter',
     per_page: 100,
     page: 1
   })
@@ -101,15 +113,15 @@ async function getOrCreateRelease () {
 
   console.log('Creating new draft release')
   const { data: release } = await github.repos.createRelease({
-    owner: 'electron',
-    repo: 'electron-api-demos',
+    owner: "akramgassem",
+    repo: "pdf-converter",
     tag_name: `v${version}`,
-    target_commitish: 'master',
+    target_commitish: "master",
     name: version,
-    body: 'An awesome new release :tada:',
+    body: "An awesome new release :tada:",
     draft: true,
     prerelease: false
-  })
+  });
   return release
 }
 
@@ -157,9 +169,9 @@ function uploadAsset (release, asset) {
 function publishRelease (release) {
   console.log('Publishing release')
   return github.repos.updateRelease({
-    owner: 'electron',
-    repo: 'electron-api-demos',
+    owner: "akramgassem",
+    repo: "pdf-converter",
     release_id: release.id,
     draft: false
-  })
+  });
 }
