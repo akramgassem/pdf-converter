@@ -1,8 +1,8 @@
 {
-  "name": "electron-api-demos",
-  "productName": "Electron API Demos",
-  "version": "2.0.2",
-  "description": "Electron interactive API demos",
+  "name": "pdf-converter",
+  "productName": "PDF Converter",
+  "version": "0.0.1",
+  "description": "Electron PDF Converter",
   "main": "main.js",
   "bin": "cli.js",
   "scripts": {
@@ -23,13 +23,16 @@
     "prepack": "check-for-leaks",
     "prepush": "check-for-leaks"
   },
-  "repository": "https://github.com/electron/electron-api-demos",
+  "repository": "https://github.com/akramgassem/pdf-converter",
   "keywords": [
     "Electron",
     "API",
     "demo"
   ],
-  "author": "GitHub",
+  "author": {
+    "name": "akram gassem",
+    "email": "akramgassem@gmail.com"
+  },
   "license": "MIT",
   "devDependencies": {
     "@octokit/rest": "^16.3.2",
